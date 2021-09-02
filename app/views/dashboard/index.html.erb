@@ -4,10 +4,10 @@
 <%= @activity.count %>
 <% @activity.each do |a| %>
   <br>
-  <%= a.actionable_type %>
+  <%= a.trackable_type %>
   <%= a.key %>
-  <%= link_to a.actionable, a.actionable %>
+  <%= link_to a.trackable, a.trackable unless a.trackable_type == 'User' %>
   <%= a.created_at %>
   by
-  <%= a.user.email %>
+  <%= a.owner&.email %>
 <% end %>

@@ -1,5 +1,5 @@
 class DashboardController < ApplicationController
   def index
-    @activity = Activity.all
+    @activity = PublicActivity::Activity.all
   end
 end

@@ -15,5 +15,23 @@
   <%= @client.email %>
 </p>
 
+<p>
+  <strong>Activity:</strong>
+  <%= @client.activities.count %>
+</p>
+
+
+<% @client.activities.each do |a| %>
+  <br>
+  <%= a.trackable_type %>
+  <%= a.key %>
+  <%= link_to a.trackable, a.trackable unless a.trackable_type == 'User' %>
+  <%= a.created_at %>
+  by
+  <%= a.owner&.email %>
+  <%= a.parameters %>
+<% end %>
+
+
 <%= link_to 'Edit', edit_client_path(@client) %> |
 <%= link_to 'Back', clients_path %>

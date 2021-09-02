@@ -25,7 +25,6 @@ class ClientsController < ApplicationController
 
     respond_to do |format|
       if @client.save
-        Activity.create(user: current_user, actionable_type: 'Client', actionable_id: @client.id, key: 'create')
         format.html { redirect_to @client, notice: "Client was successfully created." }
         format.json { render :show, status: :created, location: @client }
       else
@@ -38,8 +37,11 @@ class ClientsController < ApplicationController
   # PATCH/PUT /clients/1 or /clients/1.json
   def update
     respond_to do |format|
+      Client.public_activity_off
+      old_email = @client.email
       if @client.update(client_params)
-        Activity.create(user: current_user, actionable_type: 'Client', actionable_id: @client.id, key: 'update')
+        Client.public_activity_on
+        @client.create_activity :is_updated, parameters: { old_email: old_email }
         format.html { redirect_to @client, notice: "Client was successfully updated." }
         format.json { render :show, status: :ok, location: @client }
       else
