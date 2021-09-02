@@ -25,6 +25,7 @@ class ClientsController < ApplicationController
 
     respond_to do |format|
       if @client.save
+        Activity.create(user: current_user, actionable_type: 'Client', actionable_id: @client.id, key: 'create')
         format.html { redirect_to @client, notice: "Client was successfully created." }
         format.json { render :show, status: :created, location: @client }
       else
@@ -38,6 +39,7 @@ class ClientsController < ApplicationController
   def update
     respond_to do |format|
       if @client.update(client_params)
+        Activity.create(user: current_user, actionable_type: 'Client', actionable_id: @client.id, key: 'update')
         format.html { redirect_to @client, notice: "Client was successfully updated." }
         format.json { render :show, status: :ok, location: @client }
       else

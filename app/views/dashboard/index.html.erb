@@ -1,8 +1,13 @@
 <h1>Dashboard#index</h1>
 <p>Find me in app/views/dashboard/index.html.erb</p>
 
+<%= @activity.count %>
 <% @activity.each do |a| %>
   <br>
-  <%= a.to_s %>
+  <%= a.actionable_type %>
+  <%= a.key %>
+  <%= link_to a.actionable, a.actionable %>
   <%= a.created_at %>
+  by
+  <%= a.user.email %>
 <% end %>

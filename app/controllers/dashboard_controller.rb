@@ -1,5 +1,5 @@
 class DashboardController < ApplicationController
   def index
-    @activity = (Post.all + Client.all)
+    @activity = Activity.all
   end
 end
